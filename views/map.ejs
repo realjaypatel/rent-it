@@ -1,0 +1,235 @@
+<link rel="stylesheet" href="/public/assets/css/card.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Include Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    /* Style the map container */
+    #map {
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+    }
+    .mapclass{
+      max-width: 2200px;
+
+    }
+    .about-content{
+      overflow: auto;
+    max-height: 100vh;
+    height: 100%;
+    }
+    .li{
+      margin: 35px;
+    }
+    
+.popupContainer {
+    display: flex;
+    gap: 20px;
+}
+.popupContainer img {
+    width: 64px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.popupContainer .textContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+  </style>
+
+
+  <section class="section about" aria-label="about">
+    <div class="container mapclass">
+
+      <div class="about-banner img-holder" style="--width: 600; --height: 700;">
+        <div id="map"></div>
+      </div>
+
+      <div class="about-content">
+
+        <ul class="list">
+ 
+
+        </ul>
+
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+
+const myMap = L.map('map').setView([22.9074872, 79.07306671], 5);
+const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const attribution =
+        'Coded by jay patel';
+const tileLayer = L.tileLayer(tileUrl, { attribution });
+tileLayer.addTo(myMap);
+
+    storeList = []
+    const storeData = <%- JSON.stringify(data)%>
+
+for (var i = 0; i < storeData.length; i++) {
+
+    obj = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [storeData[i].longitude, storeData[i].latitude]
+        },
+        "properties": {
+          "name": storeData[i].title,
+          "address": storeData[i].address,
+          "price": storeData[i].price,
+          "bed":storeData[i].bedroom,
+          "bath":storeData[i].bathroom,
+          "id":storeData[i].id,
+          "img":storeData[i].images[i]
+        }
+      }
+
+  storeList.push(obj);
+}
+
+function generateList() {
+  const ul = document.querySelector('.list');
+  storeList.forEach((shop) => {
+    const li = document.createElement('li');
+    const div = document.createElement('div');
+    const a = document.createElement('a');
+    const p = document.createElement('p');
+    a.addEventListener('click', () => {
+        flyToStore(shop);
+    });
+ 
+    var liToAdd = `
+    <li class='li'>
+            <div class="card">
+              <a class="imageContainer">
+                <img src="/uploads/${shop.properties.img}" alt="" />
+              </a>
+              <div class="textContainer">
+                <h2 class="title">
+                  <a href="/place/${shop.properties.id}">${shop.properties.name}</a>
+                </h2>
+                <p class="address">
+                  <ion-icon name="location-outline"></ion-icon>
+                  <span>${shop.properties.address}</span>
+                </p>
+                <p class="price">$ ${shop.properties.price}</p>
+                <div class="bottom">
+                  <div class="features">
+                    <div class="feature">
+                      <ion-icon name="cube-outline" role="img" class="md hydrated" aria-label="cube outline"></ion-icon>
+                      <span>${shop.properties.bath}</span>
+                    </div>
+                    <div class="feature">
+                      <ion-icon name="bed-outline" role="img" class="md hydrated" aria-label="bed outline"></ion-icon>
+                      <span>${shop.properties.bed}</span>
+                    </div>
+                  </div>
+                  <div class="icons">
+                    <div class="icon">
+                      <ion-icon name="bookmark-outline"></ion-icon>
+                    </div>
+                    <div class="icon">
+                      <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+`
+    a.innerHTML+= liToAdd;
+    ul.appendChild(a);
+
+
+ });
+
+}
+
+generateList();
+function makePopupContent(shop) {
+  return `
+  <div class="popupContainer">
+          <img src=${shop.properties.img} alt="" />
+          <div class="textContainer">
+            <A href='/place/${shop.properties.id}'>${shop.properties.name}</Link>
+            <span>${shop.properties.bed} bedroom</span>
+            <b>$ ${shop.properties.price}</b>
+          </div>
+        </div>
+
+
+
+  `;
+}
+function onEachFeature(feature, layer) {
+    layer.bindPopup(makePopupContent(feature), { closeButton: false, offset: L.point(0, -8) });
+}
+
+var myIcon = L.icon({
+    iconUrl: 'public/marker.png',
+    iconSize: [30, 40]
+});
+
+const shopsLayer = L.geoJSON(storeList, {
+    onEachFeature: onEachFeature,
+    pointToLayer: function(feature, latlng) {
+        return L.marker(latlng, { icon: myIcon });
+    }
+});
+shopsLayer.addTo(myMap);
+
+function flyToStore(store) {
+    const lat = store.geometry.coordinates[1];
+    const lng = store.geometry.coordinates[0];
+
+    myMap.flyTo([lat, lng],
+         14, {
+        duration: 3
+    });
+    setTimeout(() => {
+        L.popup({closeButton: false, offset: L.point(0, -8)})
+        .setLatLng([lat, lng])
+        .setContent(makePopupContent(store))
+        .openOn(myMap);
+    }, 3000);
+}
+
+let cityName =` <%- city  %>`
+function searchCity(cityName) {
+      const url = `https://nominatim.openstreetmap.org/search?city=${cityName}&format=json`;
+      fetch(url)
+          .then(response => response.json())
+          .then(data => {
+              if (data.length > 0) {
+                  const { lat, lon } = data[0];
+                  myMap.setView([lat, lon], 12);
+              } else {
+                  
+              }
+          })
+          .catch(error => {
+              console.error('Error fetching data:', error);
+          });
+  }
+searchCity(cityName)
+
+
+
+
+
+  </script>
+
+
+<style>
+</style>
+
+

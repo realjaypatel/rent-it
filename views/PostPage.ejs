@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RentIt - Choose your dream place</title>
+
+    <!-- 
+    - favicon
+  -->
+    <link rel="shortcut icon" href="/public/favicon.svg" type="image/svg+xml">
+
+    <!-- 
+    - custom css link
+  -->
+    <link rel="stylesheet" href="/public/assets/css/style.css">
+
+    <!-- 
+    - google font link
+  -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body id="top">
+
+    <!-- 
+    - #HEADER
+  -->
+
+    <%- include('includes/header',{data:user}) %>
+
+
+
+
+
+
+        <main>
+            <article class="article">
+
+                <!-- 
+        - #HERO
+      -->
+
+
+
+
+
+
+
+
+                <section class="section about" aria-label="about">
+                    <div class="singlePage container">
+                        <div class="details">
+                            <div class="wrapper">
+                                <div class="slider">
+                                    <div class="bigImage">
+                                      <img src="/uploads/<%= post.images[0] %>" alt="" onclick="setImageIndex(0)" />
+                                    </div>
+                                    <div class="smallImages">
+                                      <% post.images.slice(1).forEach((image, index) => { %>
+                                        <img src="/uploads/<%= image %>" alt="" key="<%= index %>"  />
+                                      <% }) %>
+                                    </div>
+                                  </div>
+
+                                <div class="info">
+                                    <div class="top">
+                                        <div class="post">
+                                            <h1 >
+                                                <%= post.title %>
+                                            </h1>
+                                            <div class="address">
+                                                <ion-icon name="location-outline"></ion-icon>
+                                                <span>
+                                                    <%= post.address %>
+                                                </span>
+                                            </div>
+                                            <div class="price">$ <%= post.price %>
+                                            </div>
+                                        </div>
+                                        <div class="user">
+                                            <img src="/uploads/<%= post.user.avatar %>" alt="">
+                                            <span>
+                                                <%= post.user.username %>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="bottom">
+                                        <%= post.desc %>
+                                            <!-- Assuming postDetail.desc is already sanitized -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="features">
+                            <div class="wrapper">
+                                <p class="title">General</p>
+                                <div class="listVertical">
+                                    <% if (post.utilities==="owner" ) { %>
+                                        <div class="feature">
+                                            <ion-icon name="hammer-outline"></ion-icon>
+                                            <div class="featureText">
+                                                <span>Utilities</span>
+                                                <p>Owner is responsible</p>
+                                            </div>
+                                        </div>
+                                        <% } else { %>
+                                            <div class="feature">
+                                                <ion-icon name="hammer-outline"></ion-icon>
+                                                <div class="featureText">
+                                                    <span>Utilities</span>
+                                                    <p>Tenant is responsible</p>
+                                                </div>
+                                            </div>
+                                            <% } %>
+                                                <% if (post.pet==="allowed" ) { %>
+                                                    <div class="feature">
+                                                        <ion-icon name="logo-octocat"></ion-icon>
+                                                        <div class="featureText">
+                                                            <span>Pet Policy</span>
+                                                            <p>Pets Allowed</p>
+                                                        </div>
+                                                    </div>
+                                                    <% } else { %>
+                                                        <div class="feature">
+                                                            <ion-icon name="logo-octocat"></ion-icon>
+                                                            <div class="featureText">
+                                                                <span>Pet Policy</span>
+                                                                <p>Pets not Allowed</p>
+                                                            </div>
+                                                        </div>
+                                                        <% } %>
+                                                            <div class="feature">
+                                                                <ion-icon name="wallet-outline"></ion-icon>
+                                                                <div class="featureText">
+                                                                    <span>Income Policy</span>
+                                                                    <p>
+                                                                        <%= post.income %>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                </div>
+                                <p class="title">Sizes</p>
+                                <div class="sizes">
+                                    <div class="size">
+                                        <ion-icon name="wallet-outline"></ion-icon>
+                                        <span>
+                                            <%= post.size %> sqft
+                                        </span>
+                                    </div>
+                                    <div class="size">
+                                        <ion-icon name="bed-outline"></ion-icon>
+                                        <span>
+                                            <%= post.bedroom %> beds
+                                        </span>
+                                    </div>
+                                    <div class="size">
+                                        <ion-icon name="water-outline"></ion-icon>
+                                        <span>
+                                            <%= post.bathroom %> bathroom
+                                        </span>
+                                    </div>
+                                </div>
+                                <p class="title">Nearby Places</p>
+                                <div class="listHorizontal">
+                                    <div class="feature">
+                                        <ion-icon name="school-outline"></ion-icon>
+                                        <div class="featureText">
+                                            <span>School</span>
+                                            <p>
+                                                <% if (post.school> 999) { %>
+                                                    <%= post.school / 1000 %> km
+                                                        <% } else { %>
+                                                            <%= post.school %> m
+                                                                <% } %>
+                                                                    away
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="feature">
+                                        <ion-icon name="logo-octocat"></ion-icon>
+                                        <div class="featureText">
+                                            <span>Bus Stop</span>
+                                            <p>
+                                                <%= post.bus %> m away
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="feature">
+                                        <ion-icon name="fast-food-outline"></ion-icon>
+                                        <div class="featureText">
+                                            <span>Restaurant</span>
+                                            <p>
+                                                <%= post.restaurant %> m away
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="title">Location</p>
+                                <div class="mapContainer">
+                                    <%- include('includes/smallmap', { data:[post]}) %>
+                                </div>
+                                <div class="buttons">
+                                    <button>
+                                        <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+                                        Send a Message
+                                    </button>
+                                    <button onclick="" style="background-color: #fece51' ">
+                                        <ion-icon name="bookmark-outline"></ion-icon>
+                                        Save the Place
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+
+
+
+
+
+
+                <style>
+                    .about .container {
+                        grid-template-columns: 1.7fr 1fr;
+                    }
+
+                    .singlePage {
+                        height: 100%;
+                        color: var(--oxford-blue);
+                    }
+
+                    .singlePage .details {
+                        flex: 3;
+                        height: 100%;
+                        overflow: auto;
+                    }
+
+                    .singlePage .details .wrapper {
+                        /* padding-right: 50px; */
+                    }
+
+                    .singlePage .details .wrapper .info {
+                        margin-top: 50px;
+                    }
+
+                    .singlePage .details .wrapper .info .top {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .singlePage .details .wrapper .info .top .post {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                    }
+
+                    .singlePage .details .wrapper .info .top .post h1 {
+                        font-weight: 400;
+                    }
+
+                    .singlePage .details .wrapper .info .top .post .address {
+                        display: flex;
+                        gap: 5px;
+                        align-items: center;
+                        font-size: 14px;
+                    }
+
+                    .singlePage .details .wrapper .info .top .post .address img {
+                        width: 16px;
+                        height: 16px;
+                    }
+
+                    .singlePage .details .wrapper .info .top .post .price {
+                        padding: 5px;
+                        background-color: rgba(254, 205, 81, 0.438);
+                        border-radius: 5px;
+                        width: max-content;
+                        font-size: 20px;
+                        font-weight: 300;
+                    }
+
+                    .singlePage .details .wrapper .info .top .user {
+                        display: flex;
+                        flex-direction: column;
+                        align-items: center;
+                        justify-content: center;
+                        gap: 20px;
+                        padding: 0px 50px;
+                        border-radius: 10px;
+                        background-color: rgba(254, 205, 81, 0.209);
+                        font-weight: 600;
+                    }
+
+                    .singlePage .details .wrapper .info .top .user img {
+                        width: 50px;
+                        height: 50px;
+                        border-radius: 50%;
+                        object-fit: cover;
+                    }
+
+                    .singlePage .details .wrapper .info .bottom {
+                        margin-top: 50px;
+                        line-height: 20px;
+                    }
+
+                    .singlePage .features {
+                        flex: 2;
+                        background-color: #fcf5f3;
+                        height: 100%;
+                        overflow: auto;
+                    }
+
+                    .singlePage .features .wrapper {
+                        padding: 0px 20px;
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                    }
+
+                    .singlePage .features .wrapper img {
+                        width: 24px;
+                        height: 24px;
+                    }
+
+                    .singlePage .features .wrapper .title {
+                        font-weight: bold;
+                        font-size: 18px;
+                        margin-bottom: 10px;
+                    }
+
+                    .singlePage .features .wrapper .feature {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                    }
+
+                    .singlePage .features .wrapper .feature img {
+                        background-color: rgba(254, 205, 81, 0.209);
+                    }
+
+                    .singlePage .features .wrapper .feature .featureText span {
+                        font-weight: bold;
+                    }
+
+                    .singlePage .features .wrapper .feature .featureText p {
+                        font-size: 14px;
+                    }
+
+                    .singlePage .features .wrapper .listVertical {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 20px;
+                        padding: 20px 10px;
+                        background-color: white;
+                        border-radius: 10px;
+                    }
+
+                    .singlePage .features .wrapper .listHorizontal {
+                        display: flex;
+                        justify-content: space-between;
+                        padding: 20px 10px;
+                        background-color: white;
+                        border-radius: 10px;
+                    }
+
+                    .singlePage .features .wrapper .sizes {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .singlePage .features .wrapper .sizes .size {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        background-color: white;
+                        padding: 10px;
+                        border-radius: 5px;
+                    }
+
+                    .singlePage .features .wrapper .buttons {
+                        display: flex;
+                        justify-content: space-between;
+                    }
+
+                    .singlePage .features .wrapper .buttons button {
+                        padding: 20px;
+                        display: flex;
+                        align-items
+                </style>
+
+
+            </article>
+        </main>
+
+
+
+
+
+        <!-- 
+    - #FOOTER
+  -->
+
+        <footer class="footer">
+
+            <div class="footer-top">
+                <div class="container">
+
+                    <div class="footer-brand">
+
+                        <a href="#" class="logo">
+                            <ion-icon name="business-outline"></ion-icon> RentIt
+                        </a>
+
+                        <p class="footer-text">
+                            A great plateform to buy, sell and rent your properties without any agent or commisions.
+                        </p>
+
+                    </div>
+
+                    <ul class="footer-list">
+
+                        <li>
+                            <p class="footer-list-title">Company</p>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">About us</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">Services</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">Pricing</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">Blog</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">Login</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="footer-list">
+
+                        <li>
+                            <p class="footer-list-title">Useful Links</p>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">Terms of Services</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">Privacy Policy</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">Listing</span>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="footer-link">
+                                <ion-icon name="chevron-forward"></ion-icon>
+
+                                <span class="span">Contact</span>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <ul class="footer-list">
+
+                        <li>
+                            <p class="footer-list-title">Contact Details</p>
+                        </li>
+
+                        <li class="footer-item">
+                            <ion-icon name="location-outline"></ion-icon>
+
+                            <address class="address">
+                                C/54 Northwest Freeway,<br>
+                                Suite 558,<br>
+                                Houston, USA 485
+                                <a href="#" class="address-link">View on Google map</a>
+                            </address>
+                        </li>
+
+                        <li class="footer-item">
+                            <ion-icon name="mail-outline"></ion-icon>
+
+                            <a href="mailto:contact@example.com" class="footer-link">contact@example.com</a>
+                        </li>
+
+                        <li class="footer-item">
+                            <ion-icon name="call-outline"></ion-icon>
+
+                            <a href="tel:+152534468854" class="footer-link">+152 534-468-854</a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <div class="container">
+
+                    <p class="copyright">
+                        &copy; 2022 Realvine. All Right Reserved by <a href="#"
+                            class="copyright-link">codewithsadee</a>.
+                    </p>
+
+                    <ul class="social-list">
+
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-facebook"></ion-icon>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-instagram"></ion-icon>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-twitter"></ion-icon>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="social-link">
+                                <ion-icon name="logo-linkedin"></ion-icon>
+                            </a>
+                        </li>
+
+                    </ul>
+
+                </div>
+            </div>
+
+        </footer>
+
+
+
+
+
+        <!-- 
+    - #BACK TO TOP
+  -->
+
+        <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
+            <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
+        </a>
+
+
+
+
+
+        <!-- 
+    - custom js link
+  -->
+        <script src="/public/assets/js/script.js" defer></script>
+
+        <!-- 
+    - ionicon link
+  -->
+        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+    .singlePage {
+        margin-top: 50px;
+    }
+    .slider {
+  width: 100%;
+  height: 350px;
+  display: flex;
+  gap: 20px;
+}
+
+.slider.sm {
+  height: 280px;
+}
+
+.slider img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.slider .bigImage {
+  flex: 3;
+}
+
+.slider .bigImage.sm {
+  flex: 2;
+}
+
+.slider .smallImages {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.slider .smallImages.sm {
+  flex: 1;
+}
+
+.slider .smallImages img {
+  height: 100px;
+}
+
+.slider .smallImages img.sm {
+  height: 80px;
+}
+</style>

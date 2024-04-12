@@ -1,0 +1,135 @@
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Include Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <style>
+    /* Style the map container */
+    #map {
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+    }
+    .mapclass{
+      max-width: 2200px;
+
+    }
+    .about-content{
+      overflow: auto;
+    max-height: 100vh;
+    height: 100%;
+    }
+    .li{
+      margin: 35px;
+    }
+    
+.popupContainer {
+    display: flex;
+    gap: 20px;
+}
+.popupContainer img {
+    width: 64px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+.popupContainer .textContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+  </style>
+
+  <section class="section about" aria-label="about">
+    <div class=" mapclass">
+
+      <div class="about-banner img-holder" style="--width: 600; --height: 700;">
+        <div id="map"></div>
+      </div>
+
+
+    </div>
+  </section>
+
+  <script>
+
+storeList = []
+    const storeData = <%- JSON.stringify(data)%>
+
+for (var i = 0; i < storeData.length; i++) {
+
+    obj = {
+        "type": "Feature",
+        "geometry": {
+          "type": "Point",
+          "coordinates": [storeData[i].longitude, storeData[i].latitude]
+        },
+        "properties": {
+          "name": storeData[i].title,
+          "address": storeData[i].address,
+          "price": storeData[i].price,
+          "bed":storeData[i].bedroom,
+          "bath":storeData[i].bathroom,
+          "id":storeData[i].id,
+          "img":storeData[i].images
+        }
+      }
+
+  storeList.push(obj);
+}
+
+
+const myMap = L.map('map').setView( [storeData[0].latitude, storeData[0].longitude], 5);
+const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const attribution =
+        'Coded by jay patel';
+const tileLayer = L.tileLayer(tileUrl, { attribution });
+tileLayer.addTo(myMap);
+
+
+function makePopupContent(shop) {
+  return `
+  <div class="popupContainer">
+          <img src=/uploads/${shop.properties.img} alt="" />
+          <div class="textContainer">
+            <A href='/place/${shop.properties.id}'>${shop.properties.name}</Link>
+            <span>${shop.properties.bed} bedroom</span>
+            <b>$ ${shop.properties.price}</b>
+          </div>
+        </div>
+
+
+
+  `;
+}
+function onEachFeature(feature, layer) {
+    layer.bindPopup(makePopupContent(feature), { closeButton: false, offset: L.point(0, -8) });
+}
+
+var myIcon = L.icon({
+    iconUrl: '/public/marker.png',
+    iconSize: [30, 40]
+});
+
+const shopsLayer = L.geoJSON(storeList, {
+    onEachFeature: onEachFeature,
+    pointToLayer: function(feature, latlng) {
+        return L.marker(latlng, { icon: myIcon });
+    }
+});
+shopsLayer.addTo(myMap);
+
+
+
+
+
+
+  </script>
+
+
+<style>
+</style>
+
+
+
