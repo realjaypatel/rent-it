@@ -255,7 +255,7 @@ export const addPost_ejs = async (req, res) => {
     const user = await prisma.user.findUnique({
       where: { id },
     });
-    res.status(200).render('addPost',{user:user,errorMessage:''})
+    res.status(200).render('AddPost',{user:user,errorMessage:''})
 
   } catch (err) {
     console.log(err);
@@ -278,7 +278,7 @@ export const updatePost_ejs = async (req, res) => {
       },
     });
     console.log('post',post)
-    return res.render('updatepost',{post:post,user:req.userId})
+    return res.render('UpdatePost',{post:post,user:req.userId})
 
   } catch (err) {
     console.log(err);
