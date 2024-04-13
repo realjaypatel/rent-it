@@ -8,7 +8,12 @@ export const Home = async (req, res) => {
 
     
 };
+export const Error = async (req, res) => {
 
+  return res.render("404",{user:req.userId})
+  
+  
+};
 export const Profile = async (req, res) => {
   
   const id = req.userId;

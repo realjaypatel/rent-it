@@ -1,40 +1,29 @@
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RentIt - Choose your dream place</title>
-    <!-- 
-    - favicon
-  -->
-    <link rel="shortcut icon" href="/public/favicon.svg" type="image/svg+xml">
-
-    <!-- 
-    - custom css link
-  -->
-    <link rel="stylesheet" href="/public/assets/css/postpage.css">
-
-    <!-- 
-    - google font link
-  -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsive Blog</title>
+  <link rel="stylesheet" href="/public/assets/css/style.css">
+  <!-- <link rel="stylesheet" href="/public/assets/css/postpage.css"> -->
+  
+  
 </head>
 
-<body id="top">
-
-    <!-- 
-    - #HEADER
-  -->
-
-    <%- include('includes/header',{data:user}) %>
+<body>
+  <%- include('includes/header',{data:user}) %>
 
 
 
+
+  <!-- ---------------------------------- -->
+  <div class="mt-[90px]">
+    <div class=" p-10">
 
 
 
@@ -56,8 +45,9 @@
                     <div class="singlePage container">
                         <div class="details">
                             <div class="wrapper">
-                                <div class="slider">
+                                <!-- <div class="slider">
                                     <div class="bigImage">
+
                                       <img src="/uploads/<%= post.images[0] %>" alt="" onclick="setImageIndex(0)" />
                                     </div>
                                     <div class="smallImages">
@@ -65,7 +55,35 @@
                                         <img src="/uploads/<%= image %>" alt="" key="<%= index %>"  />
                                       <% }) %>
                                     </div>
+                                  </div> -->
+                                   <div class="slider">
+                                    <div class="bigImage">
+
+                                        <div class="main-slider" id="mainSlider">
+                                            <div class="slides-container">
+                                                <% post.images.forEach((image, index) => { %>
+                                                    <img src="/uploads/<%= image %>" alt="Image <%= image %>">
+                                                
+                                                  <% }) %>
+                                                    
+                                            </div>
+                                        </div></div>
+                                
+                                  </div> 
+
+                                  <div>
+                                    <div class="thumbnail-slider" id="thumbnailSlider">
+                                        <div class="slides-container">
+                                            <% post.images.forEach((image, index) => { %>
+                                                <img src="/uploads/<%= image %>" alt="Image <%= image %>">
+                                            
+                                              <% }) %>
+                                        </div>
+                                    </div>
                                   </div>
+                               
+                                  
+                                
 
                                 <div class="info">
                                     <div class="top">
@@ -83,7 +101,11 @@
                                             </div>
                                         </div>
                                         <div class="user">
-                                            <img src="/uploads/<%= post.user.avatar %>" alt="">
+                                            <% if (user.avatar) { %>
+                                                <img src="/uploads/<%= post.user.avatar %>" alt="">
+                                            <% } else { %>
+                                                <img src="/uploads/profile.png" alt="Default Image">
+                                            <% } %>
                                             <span>
                                                 <%= post.user.username %>
                                             </span>
@@ -238,7 +260,7 @@
                     .singlePage .details {
                         flex: 3;
                         height: 100%;
-                        overflow: auto;
+                        overflow: hidden;
                     }
 
                     .singlePage .details .wrapper {
@@ -399,223 +421,36 @@
         </main>
 
 
+    </div>
+  </div>
 
 
-
-        <!-- 
-    - #FOOTER
-  -->
-
-        <footer class="footer">
-
-            <div class="footer-top">
-                <div class="container">
-
-                    <div class="footer-brand">
-
-                        <a href="#" class="logo">
-                            <ion-icon name="business-outline"></ion-icon> RentIt
-                        </a>
-
-                        <p class="footer-text">
-                            A great plateform to buy, sell and rent your properties without any agent or commisions.
-                        </p>
-
-                    </div>
-
-                    <ul class="footer-list">
-
-                        <li>
-                            <p class="footer-list-title">Company</p>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">About us</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">Services</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">Pricing</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">Blog</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">Login</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                    <ul class="footer-list">
-
-                        <li>
-                            <p class="footer-list-title">Useful Links</p>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">Terms of Services</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">Privacy Policy</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">Listing</span>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="footer-link">
-                                <ion-icon name="chevron-forward"></ion-icon>
-
-                                <span class="span">Contact</span>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                    <ul class="footer-list">
-
-                        <li>
-                            <p class="footer-list-title">Contact Details</p>
-                        </li>
-
-                        <li class="footer-item">
-                            <ion-icon name="location-outline"></ion-icon>
-
-                            <address class="address">
-                                C/54 Northwest Freeway,<br>
-                                Suite 558,<br>
-                                Houston, USA 485
-                                <a href="#" class="address-link">View on Google map</a>
-                            </address>
-                        </li>
-
-                        <li class="footer-item">
-                            <ion-icon name="mail-outline"></ion-icon>
-
-                            <a href="mailto:contact@example.com" class="footer-link">contact@example.com</a>
-                        </li>
-
-                        <li class="footer-item">
-                            <ion-icon name="call-outline"></ion-icon>
-
-                            <a href="tel:+152534468854" class="footer-link">+152 534-468-854</a>
-                        </li>
-
-                    </ul>
-
-                </div>
-            </div>
-
-            <div class="footer-bottom">
-                <div class="container">
-
-                    <p class="copyright">
-                        &copy; 2022 Realvine. All Right Reserved by <a href="#"
-                            class="copyright-link">codewithsadee</a>.
-                    </p>
-
-                    <ul class="social-list">
-
-                        <li>
-                            <a href="#" class="social-link">
-                                <ion-icon name="logo-facebook"></ion-icon>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="social-link">
-                                <ion-icon name="logo-instagram"></ion-icon>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="social-link">
-                                <ion-icon name="logo-twitter"></ion-icon>
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="#" class="social-link">
-                                <ion-icon name="logo-linkedin"></ion-icon>
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-            </div>
-
-        </footer>
-
-
-
-
-
-        <!-- 
-    - #BACK TO TOP
-  -->
-
-        <a href="#top" class="back-top-btn" aria-label="back to top" data-back-top-btn>
-            <ion-icon name="arrow-up" aria-hidden="true"></ion-icon>
-        </a>
-
-
-
-
-
-        <!-- 
-    - custom js link
-  -->
-        <script src="/public/assets/js/script.js" defer></script>
-
-        <!-- 
-    - ionicon link
-  -->
-        <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
-        <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
 
 </body>
 
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -642,7 +477,7 @@
     }
     .slider {
   width: 100%;
-  height: 350px;
+  height: auto;
   display: flex;
   gap: 20px;
 }
@@ -687,3 +522,163 @@
   height: 80px;
 }
 </style>
+<style>
+    .about .container {
+    grid-template-columns: 1.7fr 1fr;
+}
+
+
+
+.singlePage {
+    margin-top: 50px;
+}
+
+.singlePage {
+    color: var(--darkreader-text--oxford-blue);
+    height: 100%;
+    color: var(--oxford-blue);
+}
+
+@media (min-width: 640px) {
+    .container {
+        max-width: 640px;
+        width: 100%;
+        margin-inline: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    .container, .hero-form-wrapper {
+        max-width: 700px;
+    }
+}
+
+
+@media (min-width: 992px) {
+    .container, .hero-form-wrapper {
+        max-width: 900px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .container, .hero-form-wrapper {
+        max-width: 1120px;
+    }
+}
+
+.container {
+    padding-inline: 15px;
+}
+
+@media (min-width: 768px) {
+    .about .container {
+        display: grid;
+        grid-template-columns: 1fr 0.5fr;
+        align-items: center;
+        gap: 30px;
+    }
+}
+
+@media (min-width: 992px) {
+    .about .container {
+        gap: 50px;
+    }
+}
+
+
+</style>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+
+
+
+<style>
+    /* Styles for main slider */
+.main-slider {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.main-slider .slides-container {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.main-slider img {
+    width: 100%;
+    height: auto;
+}
+
+/* Styles for thumbnail slider */
+.thumbnail-slider {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.thumbnail-slider .slides-container {
+    display: flex;
+}
+
+.thumbnail-slider img {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.main-slider {
+    width: 100%;
+    height: 300px; /* Adjust height as needed */
+    overflow: hidden;
+    position: relative;
+}
+
+.main-slider .slides-container {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.main-slider img {
+    width: 100%;
+    height: auto;
+}
+
+.main-slider .slides-container img {
+    flex: 0 0 100%; /* Ensure each image occupies the full width of the container */
+}
+.main-slider {
+    height: auto;
+}
+
+</style>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const mainSlider = document.getElementById('mainSlider');
+    const mainSlidesContainer = mainSlider.querySelector('.slides-container');
+    const mainImages = mainSlidesContainer.querySelectorAll('img');
+
+    const thumbnailSlider = document.getElementById('thumbnailSlider');
+    const thumbnailSlidesContainer = thumbnailSlider.querySelector('.slides-container');
+    const thumbnailImages = thumbnailSlidesContainer.querySelectorAll('img');
+
+    // Add click event listeners to thumbnail images
+    thumbnailImages.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', () => {
+            // Set active class on clicked thumbnail
+            thumbnailImages.forEach(img => img.classList.remove('active'));
+            thumbnail.classList.add('active');
+
+            // Scroll main slider to corresponding image
+            mainSlidesContainer.style.transform = `translateX(-${index * 100}%)`;
+        });
+    });
+
+    // Set first thumbnail image as active by default
+    thumbnailImages[0].classList.add('active');
+});
+
+</script>

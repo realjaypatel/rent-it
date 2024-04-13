@@ -30,7 +30,7 @@
                   class="lucide lucide-plus h-5 w-5">
                   <path d="M5 12h14"></path>
                   <path d="M12 5v14"></path>
-                </svg> Post Your Ad</button></a>
+                </svg> <span id="postyourad">Post Your Ad</span></button></a>
 
 
               <a href="/profile">
@@ -45,7 +45,7 @@
                     class="lucide lucide-plus h-5 w-5">
                     <path d="M5 12h14"></path>
                     <path d="M12 5v14"></path>
-                  </svg> Post Your Ad</button></a>
+                  </svg> <span id="postyourad">Post Your Ad</span></button></a>
 
 
                 <a href="/auth/register">
@@ -55,3 +55,12 @@
      </div>
   </div>
 </header>
+
+
+<style>
+@media (max-width: 767px) {
+    #postyourad {
+        display: none; /* Hides the element on mobile devices */
+    }
+}
+</style>

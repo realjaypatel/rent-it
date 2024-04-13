@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thumbnail Slider with Vanilla JavaScript</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="main-slider" id="mainSlider">
+    <div class="slides-container">
+        <img src="https://via.placeholder.com/600x400?text=Image+1" alt="Image 1">
+        <img src="https://via.placeholder.com/600x400?text=Image+2" alt="Image 2">
+        <img src="https://via.placeholder.com/600x400?text=Image+3" alt="Image 3">
+        <!-- Add more images here -->
+    </div>
+</div>
+
+<div class="thumbnail-slider" id="thumbnailSlider">
+    <div class="slides-container">
+        <img src="https://via.placeholder.com/150x100?text=Thumbnail+1" alt="Thumbnail 1">
+        <img src="https://via.placeholder.com/150x100?text=Thumbnail+2" alt="Thumbnail 2">
+        <img src="https://via.placeholder.com/150x100?text=Thumbnail+3" alt="Thumbnail 3">
+        <!-- Add more thumbnail images here -->
+    </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
+
+<style>
+    /* Styles for main slider */
+.main-slider {
+    width: 100%;
+    height: 300px;
+    overflow: hidden;
+    position: relative;
+}
+
+.main-slider .slides-container {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 100%;
+}
+
+.main-slider img {
+    width: 100%;
+    height: auto;
+    flex: 0 0 100%;
+}
+
+/* Styles for thumbnail slider */
+.thumbnail-slider {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.thumbnail-slider .slides-container {
+    display: flex;
+}
+
+.thumbnail-slider img {
+    width: 100px;
+    height: auto;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+/* Active thumbnail */
+.thumbnail-slider .slides-container .active {
+    border: 2px solid blue; /* Change to desired active border style */
+}
+
+</style>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+    const mainSlider = document.getElementById('mainSlider');
+    const mainSlidesContainer = mainSlider.querySelector('.slides-container');
+    const mainImages = mainSlidesContainer.querySelectorAll('img');
+
+    const thumbnailSlider = document.getElementById('thumbnailSlider');
+    const thumbnailSlidesContainer = thumbnailSlider.querySelector('.slides-container');
+    const thumbnailImages = thumbnailSlidesContainer.querySelectorAll('img');
+
+    // Add click event listeners to thumbnail images
+    thumbnailImages.forEach((thumbnail, index) => {
+        thumbnail.addEventListener('click', () => {
+            // Set active class on clicked thumbnail
+            thumbnailImages.forEach(img => img.classList.remove('active'));
+            thumbnail.classList.add('active');
+
+            // Scroll main slider to corresponding image
+            mainSlidesContainer.style.transform = `translateX(-${index * 100}%)`;
+        });
+    });
+
+    // Set first thumbnail image as active by default
+    thumbnailImages[0].classList.add('active');
+});
+
+</script>
