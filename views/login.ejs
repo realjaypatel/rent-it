@@ -69,6 +69,9 @@
                               <input class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50" placeholder="Ex. Joy Disusa" type="password" name="password"  required>
                             </div>
                           </div>
+                          <% if(errorMessage) {%>
+                            <div style="color: red"><%=errorMessage%></div>
+                            <% } %>
                           <div>
                             Don't have an account? <a href="/auth/register" style="color:rgba(127, 87, 241, .9);">Register</a>
                           </div>

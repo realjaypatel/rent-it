@@ -10,7 +10,8 @@ export const register = async (req, res) => {
       where: { username },
     });
 
-    if (user) return res.status(400).json({ message: "user with this username already exist" });
+    if (user) return res.render('Register',{errorMessage:'user with this username already exist',user:''},)
+
 
     // HASH THE PASSWORD
 
@@ -53,7 +54,8 @@ export const register = async (req, res) => {
 
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to create user!" });
+    res.render('Register',{errorMessage:'Failed to create user!',user:''},)
+
   }
 
 
@@ -70,18 +72,17 @@ export const login = async (req, res) => {
       where: { username },
     });
 
-    if (!user) return res.status(400).json({ message: "Invalid Credentials!" });
+    if (!user) res.render('Login',{errorMessage:'Invalid Credentials!',user:''});
 
     // CHECK IF THE PASSWORD IS CORRECT
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
 
-    if (!isPasswordValid)
-      return res.status(400).json({ message: "Invalid Credentials!" });
+    if (!isPasswordValid) return res.render('Login',{errorMessage:'Invalid Credentials!',user:''}) ;
 
     // GENERATE COOKIE TOKEN AND SEND TO THE USER
 
-    // res.setHeader("Set-Cookie", "test=" + "myValue").json("success")
+    
     const age = 1000 * 60 * 60 * 24 * 7;
 
     const token = jwt.sign(
@@ -105,17 +106,19 @@ export const login = async (req, res) => {
     res.redirect('/profile')
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Failed to login!" });
+    return res.render('Login',{errorMessage:'Failed to login!',user:''})
+    
   }
 };
 
 export const logout = (req, res) => {
-  res.clearCookie("token").status(200).json({ message: "Logout Successful" });
+  res.clearCookie("token").status(200)
+  return res.render('Register',{errorMessage:'',user:''},)
 };
 
 export const register_ejs=  (req,res)=>{
-  res.render('Register',{errorMessage:'',user:''},)
+  return res.render('Register',{errorMessage:'',user:''},)
   };
 export const login_ejs=(req,res)=>{
-  res.render('Login',{errorMessage:'',user:''})
+  return res.render('Login',{errorMessage:'',user:''})
   };
