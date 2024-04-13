@@ -187,7 +187,7 @@ export const updateUser_ejs = async (req, res) => {
     const user = await prisma.user.findUnique({
       where: { id },
     });
-    res.status(200).render('UpdatePage',{user:user,errorMessage:''})
+    res.status(200).render('UpdateUser',{user:user,errorMessage:''})
 
   } catch (err) {
     console.log(err);
