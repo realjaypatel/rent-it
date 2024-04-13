@@ -10,7 +10,7 @@ export const Home = async (req, res) => {
 };
 export const Error = async (req, res) => {
 
-  return res.render("404",{user:req.userId})
+  return res.render("404",{user:req.userId,message:'no-page found '})
   
   
 };
@@ -85,6 +85,28 @@ export const getPost = async (req, res) => {
 } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed to get post" });
+  }
+};
+
+export const getUser = async (req, res) => {
+
+  const username = req.params.id;
+  try {
+    let userData = await prisma.user.findUnique({
+      where: { username },
+    });
+    const userPosts = await prisma.post.findMany({
+      where: { userId: userData.id },
+
+    });
+ 
+    
+    return res.render("UserPage",{user:userData,posts:userPosts,})
+  } catch (err) {
+    console.log(err);
+    return res.render('404',{message:'No User Found',user:req.userId})
+    
+   
   }
 };
 

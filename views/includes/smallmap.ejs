@@ -1,24 +1,42 @@
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div style="width: 100%; ; border-radius: 10px; position: relative; overflow: hidden;">
 
-  <!-- Include Leaflet JavaScript -->
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+              <div id="map"></div>
+            </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
   <style>
     /* Style the map container */
     #map {
       height: 100%;
       width: 100%;
       z-index: 0;
+      min-height: 300px;
     }
     .mapclass{
       max-width: 2200px;
 
     }
-    .about-content{
-      overflow: auto;
-    max-height: 100vh;
-    height: 100%;
-    }
+
     .li{
       margin: 35px;
     }
@@ -41,24 +59,19 @@
 
   </style>
 
-  <section class="section about" aria-label="about">
-    <div class=" mapclass">
 
-      <div class="about-banner img-holder" style="--width: 600; --height: 700;">
-        <div id="map"></div>
-      </div>
-
-
-    </div>
-  </section>
 
   <script>
 
-storeList = []
+    storeList = []
     const storeData = <%- JSON.stringify(data)%>
 
 for (var i = 0; i < storeData.length; i++) {
-
+    let img = storeData[i].images[0]
+   
+    if(img==undefined){
+      img = 'default.jpg'
+    }
     obj = {
         "type": "Feature",
         "geometry": {
@@ -72,7 +85,7 @@ for (var i = 0; i < storeData.length; i++) {
           "bed":storeData[i].bedroom,
           "bath":storeData[i].bathroom,
           "id":storeData[i].id,
-          "img":storeData[i].images
+          "img":img
         }
       }
 
@@ -80,18 +93,17 @@ for (var i = 0; i < storeData.length; i++) {
 }
 
 
-const myMap = L.map('map').setView( [storeData[0].latitude, storeData[0].longitude], 5);
+const myMap = L.map('map').setView([22.9074872, 79.07306671], 4);
 const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const attribution =
         'Coded by jay patel';
 const tileLayer = L.tileLayer(tileUrl, { attribution });
 tileLayer.addTo(myMap);
 
-
 function makePopupContent(shop) {
   return `
   <div class="popupContainer">
-          <img src=/uploads/${shop.properties.img} alt="" />
+          <img src=${shop.properties.img} alt="" />
           <div class="textContainer">
             <A href='/place/${shop.properties.id}'>${shop.properties.name}</Link>
             <span>${shop.properties.bed} bedroom</span>
@@ -120,6 +132,22 @@ const shopsLayer = L.geoJSON(storeList, {
 });
 shopsLayer.addTo(myMap);
 
+function flyToStore(store) {
+    const lat = store.geometry.coordinates[1];
+    const lng = store.geometry.coordinates[0];
+
+    myMap.flyTo([lat, lng],
+         14, {
+        duration: 3
+    });
+    setTimeout(() => {
+        L.popup({closeButton: false, offset: L.point(0, -8)})
+        .setLatLng([lat, lng])
+        .setContent(makePopupContent(store))
+        .openOn(myMap);
+    }, 3000);
+}
+
 
 
 
@@ -128,8 +156,24 @@ shopsLayer.addTo(myMap);
   </script>
 
 
-<style>
-</style>
+ 
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
