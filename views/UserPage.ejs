@@ -191,8 +191,9 @@ for (var i = 0; i < storeData.length; i++) {
          "name": storeData[i].title,
          "address": storeData[i].address,
          "price": storeData[i].price,
-         "bed":storeData[i].bedroom,
-         "bath":storeData[i].bathroom,
+         "bedroom":storeData[i].bedroom,
+         "bathroom":storeData[i].bathroom,
+         "size":storeData[i].size,
          "id":storeData[i].id,
          "img":img
        }
@@ -236,7 +237,8 @@ var liToAdd = `
                         <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
                         <circle cx="12" cy="10" r="3"></circle>
                       </svg>$${shop.properties.price}</h2>
-                    <div class="flex gap-2 mt-2 justify-between">
+                    
+                      <div class="flex gap-2 mt-2 justify-between">
                       <h2
                         class="flex gap-2 text-sm bg-slate-200  rounded-md p-2 w-full text-gray-500 justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -246,12 +248,7 @@ var liToAdd = `
                           <path d="M4 10V6a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4"></path>
                           <path d="M12 4v6"></path>
                           <path d="M2 18h20"></path>
-                        </svg>
-                        <a href="/place/${shop.properties.id}">
-                            <span class="item-text">view</span>
-                          </a>
-                        </h2>
-                        
+                        </svg>${shop.properties.bedroom}</h2>
                       <h2
                         class="flex gap-2 text-sm bg-slate-200  rounded-md p-2 w-full text-gray-500 justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -264,12 +261,7 @@ var liToAdd = `
                           <line x1="2" x2="22" y1="12" y2="12"></line>
                           <line x1="7" x2="7" y1="19" y2="21"></line>
                           <line x1="17" x2="17" y1="19" y2="21"></line>
-                        </svg>
-                        <a href="/post/update/${shop.properties.id}" > Update</a>
-
-
-                        </h2>
-
+                        </svg>${shop.properties.bathroom}</h2>
                       <h2
                         class="flex gap-2 w-full text-sm bg-slate-200  rounded-md p-2 text-gray-500 justify-center items-center">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -282,12 +274,7 @@ var liToAdd = `
                           <path d="m11.5 9.5 2-2"></path>
                           <path d="m8.5 6.5 2-2"></path>
                           <path d="m17.5 15.5 2-2"></path>
-                        </svg>
-                        <a href="/post/delete/${shop.properties.id}">
-                            <span class="item-text">Delete</span>
-                          </a>
-                    
-                        </h2>
+                        </svg>${shop.properties.size}</h2>
                     </div>
                   </div>
                 </div>

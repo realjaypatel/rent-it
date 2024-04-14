@@ -94,7 +94,7 @@ export const addPost = async (req, res) => {
   } catch (error) {
     console.log('err',error)
   }
-console.log(images)
+  
   let body = {
     postData: {
       title: req.body.title,
@@ -138,6 +138,30 @@ console.log(images)
 export const updatePost = async (req, res) => {
   let images = null
   let id = req.params.id
+  
+  try {
+    const post = await prisma.post.findUnique({
+      where: { id },
+      include: {
+        user: {
+          
+        },
+      },
+    });
+    if (req.userId !=user.id){
+    return res.status(500).json({ message: "not authorised" });
+    }
+
+    
+  } catch (err) {
+    
+    return res.status(500).json({ message: "not authorised" });
+  }
+
+
+
+
+
   try {
     if(req.files){
       try {
