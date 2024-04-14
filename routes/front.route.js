@@ -4,7 +4,7 @@ import { Home,Profile, Search, getPost,Error, getUser } from "../controllers/fro
 import {passthroughToken} from "../middleware/passthroughToken.js"
 const router = express.Router();
 
-router.get("/",passthroughToken,Home);
+router.get("/",passthroughToken,Search);
 router.get("/profile",verifyToken,Profile);
 router.get("/search",passthroughToken,Search);
 router.get("/place/:id",passthroughToken,getPost);

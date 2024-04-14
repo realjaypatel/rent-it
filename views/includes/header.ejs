@@ -5,62 +5,66 @@
           style="color: transparent;"></a>
       <ul class="hidden md:flex gap-10">
         <a href="/search?type=sell">
-        <li class="'hover:text-primary 
+          <li class="hover:text-primary 
     font-medium text-sm cursor-pointer'
-    text-primary">For Sell</li>
+    ">For Sell</li>
         </a>
         <a href="/search?type=rent">
-          <li class="'hover:text-primary 
-    font-medium text-sm cursor-pointer'
-    false">For Rent</li>
+          <li class="hover:text-primary 
+          font-medium text-sm cursor-pointer'
+          ">For Rent</li>
         </a>
 
         <li class="hover:text-primary font-medium text-sm cursor-pointer">Agent Finder</li>
-     
+
       </ul>
     </div>
     <div class="flex gap-2 items-center">
-      
-
-            <% if (user) { %>
-              <a href="/post/addpost"><button
-                class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 flex gap-2"><svg
-                  xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                  class="lucide lucide-plus h-5 w-5">
-                  <path d="M5 12h14"></path>
-                  <path d="M12 5v14"></path>
-                </svg> <span id="postyourad">Post Your Ad</span></button></a>
 
 
-              <a href="/profile">
-              <img alt="user profile" type="button" id="radix-:r0:" aria-haspopup="menu" aria-expanded="false" data-state="closed" loading="lazy" width="35" height="35" decoding="async" data-nimg="1" class="rounded-full" src="/uploads/profile.png" >
-              </a>
-
-               <% } else { %>
-                <a href="/auth/register"><button
-                  class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 flex gap-2"><svg
-                    xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-                    stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-                    class="lucide lucide-plus h-5 w-5">
-                    <path d="M5 12h14"></path>
-                    <path d="M12 5v14"></path>
-                  </svg> <span id="postyourad">Post Your Ad</span></button></a>
+      <% if (user) { %>
+        <a href="/post/addpost"><button
+            class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 flex gap-2"><svg
+              xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="lucide lucide-plus h-5 w-5">
+              <path d="M5 12h14"></path>
+              <path d="M12 5v14"></path>
+            </svg> <span id="postyourad">Post Your Ad</span></button></a>
 
 
-                <a href="/auth/register">
-              <button class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">Login</button></a>
-              <% } %>
-          
-     </div>
+        <a href="/profile">
+          <img alt="user profile" type="button" id="radix-:r0:" aria-haspopup="menu" aria-expanded="false"
+            data-state="closed" loading="lazy" width="35" height="35" decoding="async" data-nimg="1"
+            class="rounded-full" src="/uploads/profile.png">
+        </a>
+
+        <% } else { %>
+          <a href="/auth/register"><button
+              class="items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-10 px-4 py-2 flex gap-2"><svg
+                xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-plus h-5 w-5">
+                <path d="M5 12h14"></path>
+                <path d="M12 5v14"></path>
+              </svg> <span id="postyourad">Post Your Ad</span></button></a>
+
+
+          <a href="/auth/register">
+            <button
+              class="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent hover:text-accent-foreground h-10 px-4 py-2">Login</button></a>
+          <% } %>
+
+    </div>
   </div>
 </header>
 
 
 <style>
-@media (max-width: 767px) {
+  @media (max-width: 767px) {
     #postyourad {
-        display: none; /* Hides the element on mobile devices */
+      display: none;
+      /* Hides the element on mobile devices */
     }
-}
+  }
 </style>

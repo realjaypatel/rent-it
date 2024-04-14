@@ -58,7 +58,7 @@ export const updateUser = async (req, res) => {
         if (user_data.avatar) {
           FileDelete(user_data.avatar)
         }
-        console.log('before avatar',req.files.avatar)
+        
         avatar = await FileUploader(req.files.avatar)
         } catch (error) {
           console.log(error)
